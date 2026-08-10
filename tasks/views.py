@@ -15,11 +15,16 @@ class TaskListCreateApi(ListCreateAPIView):
 
     def perform_create(self, serializer):
         column = serializer.validated_data["column"]
+        new_position = 0
 
         if column.board.user != self.request.user:
             raise PermissionDenied("You do not own this board")
 
-        serializer.save()
+        last_task = column.tasks.last()
+        if last_task:
+            new_position = last_task.position + 1
+
+        serializer.save(position=new_position)
 
 
 class TaskDetailApi(RetrieveUpdateDestroyAPIView):

@@ -16,11 +16,16 @@ class ColumnListCreateApi(ListCreateAPIView):
 
     def perform_create(self, serializer):
         board = serializer.validated_data["board"]
+        new_position = 0
 
         if board.user != self.request.user:
             raise PermissionDenied("You do not own this board")
 
-        serializer.save()
+        last_column = board.columns.last()
+        if last_column:
+            new_position = last_column.position + 1
+
+        serializer.save(position=new_position)
 
 
 class ColumnDetailApi(RetrieveUpdateDestroyAPIView):
