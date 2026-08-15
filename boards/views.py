@@ -1,8 +1,7 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from boards.board_detail_serializers import BoardDetailSerializer
-from boards.board_serializers import BoardSerializer
+from boards.board_serializers import BoardSerializer, BoardDetailSerializer
 from boards.models import Board
 
 
