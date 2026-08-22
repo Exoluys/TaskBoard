@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from boards.models import Board
+from boards.models import Board, BoardMember
 from columns.column_seralizers import ColumnDetailSerializer
 
 
@@ -32,3 +32,17 @@ class BoardDetailSerializer(serializers.ModelSerializer):
             "updated_at",
             "columns",
         ]
+
+
+class BoardMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BoardMember
+        fields = [
+            "id",
+            "user",
+            "role"
+        ]
+
+
+class BoardMembersSerializer(serializers.Serializer):
+    members = BoardMemberSerializer(many=True)
